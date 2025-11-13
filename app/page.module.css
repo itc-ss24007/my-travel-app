@@ -14,21 +14,22 @@
 }
 
 .grid {
-  /* フレックスからグリッドに変更して自動で列数を調整 */
+  /* 各カードの最大幅を320pxに制限し、要素が少なくても中央にまとまる */
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 2rem;
-  /* 最大幅を設定してコンテンツを中央寄せ */
+  grid-template-columns: repeat(auto-fit, minmax(240px, 320px));
+  gap: 1.5rem; /* ギャップを少し小さく */
   max-width: 1200px;
   margin: 0 auto;
   align-items: start;
+  justify-content: center; /* グリッド全体を中央寄せ */
+  justify-items: center; /* 各セル内の要素を中央寄せ */
+  padding-inline: 1rem;
 }
 
 /* カードは幅100%で親グリッドセルにフィット、最大幅で制限して中央寄せ */
 .card {
   width: 100%;
-  max-width: 280px;
-  justify-self: center;
+  max-width: 320px; /* カード幅を固定寄りにして大きな余白を防ぐ */
   background: #ffffff;
   border-radius: 1rem;
   box-shadow: 0 4px 12px rgba(0, 150, 200, 0.15);
@@ -37,6 +38,8 @@
   overflow: hidden;
   transition: all 0.25s ease;
   border: 2px solid transparent;
+  display: block;
+  justify-self: center;
 }
 
 .card:hover {
@@ -47,7 +50,7 @@
 
 .card img {
   width: 100%;
-  height: 180px;
+  height: 200px;
   object-fit: cover;
 }
 
