@@ -1,36 +1,52 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 観光スポットガイド
 
-## Getting Started
+## 概要
 
-First, run the development server:
+- 開発期間: 2025 年 11 月 12 日ー 2025 年 11 月 26 日
+- Next.js と microCMS を使用した観光紹介アプリです。  
+  観光の人気都市とスポット情報を microCMS から取得し、都市ごとに一覧と詳細ページで表示します。
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## 使用技術
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- Next.js (App Router)
+- TypeScript
+- CSS Modules
+- microCMS
+- Vercel (デプロイ)
+- GitHub (ソース管理)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 主な機能
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- microCMS から人気都市とスポット情報を取得
+- トップページで都市一覧を表示
+- 各都市ページで観光スポット一覧を表示
+- 各スポットの詳細ページを表示
 
-## Learn More
+## ページ構成
 
-To learn more about Next.js, take a look at the following resources:
+- `/` トップページ（人気都市の一覧）
+- `/[city]` 観光スポット一覧
+- `/[city]/[spot]` スポットの詳細ページ
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## ディレクトリ構成
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- app/
+  - page.tsx — トップページ
+  - page.module.css — トップページのスタイル
+  - globals.css
+  - [city]/
+    - page.tsx — 都市ページ
+    - page.module.css — 都市ページのスタイル
+    - [spot]/
+      - page.tsx — スポット詳細ページ
+      - page.module.css — スポット詳細のスタイル
+- \_lib/
+  - microcms.ts — microCMS クライアント初期化
 
-## Deploy on Vercel
+## データ項目（microCMS）
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## microCMS にアクセスする処理
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## デプロイ先
+
+- https://my-travel-app-pi.vercel.app/
