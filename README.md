@@ -45,7 +45,56 @@
 
 ## データ項目（microCMS）
 
+- cities
+  - name(都市名)
+  - image（画像）
+  - description（詳細説明）
+  - slug(ページの URL 用)
+- spots
+  - title（スポット名）
+  - image（画像）
+  - description（詳細説明）
+  - location（所在地）
+  - recommend（おすすめポイント）
+  - city(ページの URL 用と関連)
+
 ## microCMS にアクセスする処理
+
+- API キーを.env.local に保存
+  - MICROCMS_SERVICE_DOMAIN=xxxxx
+  - MICROCMS_API_KEY=yyyyyyyy
+- microCMS に連携のクライアント初期化
+  - /\_lib/microcms.ts を作成
+  ```
+  import { createClient } from "microcms-js-sdk";
+  export const client = createClient({
+  serviceDomain: process.env.MICROCMS_SERVICE_DOMAIN!,
+  apiKey: process.env.MICROCMS_API_KEY!,
+  });
+  ```
+- - 都市一覧取得（トップ）
+
+```ts
+const data = await client.getList<City>({ endpoint: "cities" });
+```
+
+- スポット一覧取得（都市ページ）
+
+```ts
+const data = await client.getList<Spot>({
+  endpoint: "travel-spots",
+  queries: { filters: `city[equals]${slug}` },
+});
+```
+
+- スポット詳細取得（詳細ページ）
+
+```ts
+const item = await client.get<Spot>({
+  endpoint: "travel-spots",
+  contentId: spotId,
+});
+```
 
 ## デプロイ先
 
