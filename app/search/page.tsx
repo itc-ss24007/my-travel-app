@@ -1,7 +1,6 @@
 import { client } from "@/_lib/microcms";
 import Link from "next/link";
 import Image from "next/image";
-import { notFound } from "next/navigation";
 import styles from "./page.module.css";
 import SearchField from "@/app/components/SearchField";
 
@@ -13,41 +12,51 @@ type Spot = {
   recommend?: string;
 };
 
-type City = { slug: string };
-
-export async function generateStaticParams() {
-  const res = await client.getList<City>({ endpoint: "cities" });
-  return res.contents.map((c) => ({ city: c.slug }));
-}
-
-export default async function CityPage({
-  params,
+export default async function SearchPage({
+  searchParams,
 }: {
-  params: Promise<{ city: string }>;
+  searchParams: Promise<{ q?: string }>;
 }) {
-  const { city } = await params;
+  const { q } = await searchParams;
+  const term = q?.trim();
 
+  if (!term) {
+    return (
+      <main className={styles.main}>
+        <Link href="/" className={styles.backLink}>
+          ← トップへ戻る
+        </Link>
+
+        <SearchField />
+      </main>
+    );
+  }
+
+  // MicroCMS 全文検索（q）を使う（タイトル・本文等にヒットする）
   const data = await client.getList<Spot>({
     endpoint: "travel-spots",
-    queries: { filters: `city[equals]${city}` },
+    queries: { q: term },
   });
 
-  if (!data?.contents || data.contents.length === 0) return notFound();
-
+  //   console.log("data:", data);
   return (
     <main className={styles.main}>
       <Link href="/" className={styles.backLink}>
         ← トップへ戻る
       </Link>
 
-      <h1 className={styles.title}>{city} の観光地一覧</h1>
-
       <SearchField />
+
+      {data.contents.length === 0 && (
+        <p style={{ marginTop: "2rem", fontSize: "1.1rem" }}>
+          該当する観光地が見つかりませんでした。
+        </p>
+      )}
 
       <div className={styles.grid}>
         {data.contents.map((spot) => (
           <Link
-            href={`/${city}/${spot.id}`}
+            href={`/${spot.city}/${spot.id}`}
             key={spot.id}
             className={styles.card}
           >

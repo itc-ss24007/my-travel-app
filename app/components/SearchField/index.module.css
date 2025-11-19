@@ -1,0 +1,51 @@
+.form {
+  width: 100%;
+  max-width: 1200px; /* 与 grid 一致 */
+  margin: 0 auto 2rem;
+  padding: 0 1rem;
+}
+
+/* Search box container */
+.search {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  background: #ffffff;
+  border-radius: 0.75rem;
+  border: 2px solid #b3e5fc; /* ページのブルー系と統一 */
+  box-shadow: 0 4px 10px rgba(0, 150, 200, 0.12);
+  transition: all 0.25s ease;
+  cursor: text;
+}
+
+/* When focusing inside */
+.search:focus-within {
+  border-color: #4fc3f7; /* カード hover と同じ色 */
+  box-shadow: 0 6px 14px rgba(0, 150, 200, 0.18);
+}
+
+/* Input field */
+.searchInput {
+  flex: 1;
+  font-size: 1rem;
+  padding: 6px 0;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #01579b;
+}
+
+.searchInput::placeholder {
+  color: #81d4fa; /* 調和した薄いブルー */
+}
+
+/* Optional for the search icon if needed */
+.search img {
+  opacity: 0.75;
+  transition: opacity 0.2s ease;
+}
+
+.search:focus-within img {
+  opacity: 1;
+}
