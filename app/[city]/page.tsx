@@ -4,6 +4,7 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 import styles from "./page.module.css";
 import SearchField from "@/app/components/SearchField";
+import Pagination from "@/app/components/Pagination";
 
 type Spot = {
   id: string;
@@ -15,24 +16,42 @@ type Spot = {
 
 type City = { slug: string };
 
+// 静的パス生成
 export async function generateStaticParams() {
   const res = await client.getList<City>({ endpoint: "cities" });
   return res.contents.map((c) => ({ city: c.slug }));
 }
 
+const PER_PAGE = 3; // 1ページに表示する件数
+
 export default async function CityPage({
   params,
+  searchParams,
 }: {
   params: Promise<{ city: string }>;
+  searchParams: Promise<{ page?: string }>;
 }) {
   const { city } = await params;
 
+  // searchParams をアンラップして page を取得（デフォルト 1）
+  const { page } = await searchParams;
+  const currentPage = Math.max(1, Number(page ?? 1));
+  const offset = (currentPage - 1) * PER_PAGE;
+
+  // データ取得（pagination 用）
   const data = await client.getList<Spot>({
     endpoint: "travel-spots",
-    queries: { filters: `city[equals]${city}` },
+    queries: {
+      filters: `city[equals]${city}`,
+      limit: PER_PAGE,
+      offset,
+    },
   });
 
   if (!data?.contents || data.contents.length === 0) return notFound();
+
+  // 総ページ数
+  const totalPages = Math.ceil(data.totalCount / PER_PAGE);
 
   return (
     <main className={styles.main}>
@@ -68,6 +87,12 @@ export default async function CityPage({
           </Link>
         ))}
       </div>
+
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        basePath={`/${city}`}
+      />
     </main>
   );
 }

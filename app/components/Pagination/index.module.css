@@ -1,0 +1,21 @@
+.pagination {
+  margin-top: 2rem;
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  align-items: center;
+}
+
+.pageButton {
+  padding: 0.5rem 1rem;
+  background: #0277bd;
+  color: white;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.pageInfo {
+  font-size: 1rem;
+  color: #333;
+}
