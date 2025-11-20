@@ -4,47 +4,40 @@ import Link from "next/link";
 import styles from "./index.module.css";
 
 type Props = {
-  currentPage: number;
-  totalPages: number;
-  basePath: string; // 例: "/tokyo"
+  totalCount: number; // 総件数
+  current?: number; // 現在のページ（デフォルトは1）
+  basePath: string; // 基本パス（例: "/tokyo"）
+  perPage?: number; // 1ページあたりの表示件数（デフォルト3）
 };
 
 export default function Pagination({
-  currentPage,
-  totalPages,
+  totalCount,
+  current = 1,
   basePath,
+  perPage = 3,
 }: Props) {
-  if (totalPages === 1) {
-    return (
-      <div className={styles.pagination}>
-        <span className={`${styles.pageButton} ${styles.active}`}>1</span>
-      </div>
-    );
-  }
+  const totalPages = Math.ceil(totalCount / perPage); // 総ページ数
+
+  // ページ番号の配列を生成
+  const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
 
   return (
-    <div className={styles.pagination}>
-      {currentPage > 1 && (
-        <Link
-          href={`${basePath}?page=${currentPage - 1}`}
-          className={styles.pageButton}
-        >
-          ← 前へ
-        </Link>
-      )}
-
-      <span className={styles.pageInfo}>
-        {currentPage} / {totalPages}
-      </span>
-
-      {currentPage < totalPages && (
-        <Link
-          href={`${basePath}?page=${currentPage + 1}`}
-          className={styles.pageButton}
-        >
-          次へ →
-        </Link>
-      )}
-    </div>
+    <nav>
+      <ul className={styles.container}>
+        {pages.map((p) => (
+          <li className={styles.list} key={p}>
+            {current !== p ? (
+              // 現在のページでない場合はリンクにする
+              <Link href={`${basePath}?page=${p}`} className={styles.item}>
+                {p}
+              </Link>
+            ) : (
+              // 現在のページはハイライト表示
+              <span className={`${styles.item} ${styles.current}`}>{p}</span>
+            )}
+          </li>
+        ))}
+      </ul>
+    </nav>
   );
 }

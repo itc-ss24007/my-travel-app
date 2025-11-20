@@ -22,7 +22,7 @@ export async function generateStaticParams() {
   return res.contents.map((c) => ({ city: c.slug }));
 }
 
-const PER_PAGE = 3; // 1ページに表示する件数
+const PER_PAGE = 3; // 1ページあたりの件数
 
 export default async function CityPage({
   params,
@@ -33,12 +33,11 @@ export default async function CityPage({
 }) {
   const { city } = await params;
 
-  // searchParams をアンラップして page を取得（デフォルト 1）
   const { page } = await searchParams;
   const currentPage = Math.max(1, Number(page ?? 1));
   const offset = (currentPage - 1) * PER_PAGE;
 
-  // データ取得（pagination 用）
+  // データ取得
   const data = await client.getList<Spot>({
     endpoint: "travel-spots",
     queries: {
@@ -49,9 +48,6 @@ export default async function CityPage({
   });
 
   if (!data?.contents || data.contents.length === 0) return notFound();
-
-  // 総ページ数
-  const totalPages = Math.ceil(data.totalCount / PER_PAGE);
 
   return (
     <main className={styles.main}>
@@ -88,10 +84,12 @@ export default async function CityPage({
         ))}
       </div>
 
+      {/* Pagination コンポーネント */}
       <Pagination
-        currentPage={currentPage}
-        totalPages={totalPages}
+        totalCount={data.totalCount}
+        current={currentPage}
         basePath={`/${city}`}
+        perPage={PER_PAGE}
       />
     </main>
   );
