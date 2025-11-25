@@ -23,10 +23,6 @@ export default async function SearchPage({
   if (!term) {
     return (
       <main className={styles.main}>
-        <Link href="/" className={styles.backLink}>
-          ← トップへ戻る
-        </Link>
-
         <SearchField />
       </main>
     );
@@ -41,10 +37,6 @@ export default async function SearchPage({
   //   console.log("data:", data);
   return (
     <main className={styles.main}>
-      <Link href="/" className={styles.backLink}>
-        ← トップへ戻る
-      </Link>
-
       <SearchField />
 
       {data.contents.length === 0 && (

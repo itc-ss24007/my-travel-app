@@ -26,7 +26,10 @@ export default async function SpotPage({
   const { city, spot } = await params;
 
   // contentId を使って単一取得
-  const data = await client.get<Spot>({ endpoint: "travel-spots", contentId: spot });
+  const data = await client.get<Spot>({
+    endpoint: "travel-spots",
+    contentId: spot,
+  });
 
   if (!data) return notFound();
 
@@ -35,7 +38,9 @@ export default async function SpotPage({
 
   return (
     <main className={styles.main}>
-      <Link href={`/${city}`} className={styles.backLink}>← {city} に戻る</Link>
+      <Link href={`/${city}`} className={styles.backLink}>
+        ← {city} に戻る
+      </Link>
 
       <h1 className={styles.title}>{data.title}</h1>
 

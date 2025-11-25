@@ -22,7 +22,7 @@ export async function generateStaticParams() {
   return res.contents.map((c) => ({ city: c.slug }));
 }
 
-const PER_PAGE = 3; // 1ページあたりの件数
+const PER_PAGE = 6; // 1ページあたりの件数
 
 export default async function CityPage({
   params,
