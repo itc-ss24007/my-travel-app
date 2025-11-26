@@ -1,13 +1,23 @@
 .main {
-  padding: 2rem;
   text-align: center;
   background: linear-gradient(to bottom right, #e0f7fa, #ffffff);
   min-height: 100vh;
+  padding-bottom: 2rem;
+}
+
+/* カルーセル画像を中央寄せし幅を制限 */
+.carouselWrapper {
+  width: 100%;
+  max-width: 900px; /* 最大幅を制限して見やすくする */
+  height: 60vh; /* 画像の高さ（調整可） */
+  margin: 0 auto 1.5rem auto; /* 中央寄せ */
+  border-radius: 12px;
+  overflow: hidden;
 }
 
 .backLink {
   display: inline-block;
-  margin-bottom: 0.5rem;
+  margin: 1rem auto;
   color: #01579b;
   text-decoration: none;
 }
@@ -15,20 +25,12 @@
 .title {
   color: #0277bd;
   font-size: 2rem;
-  margin: 1rem 0;
+  margin: 1rem auto;
   font-weight: 600;
+  text-align: center;
 }
 
-.hero {
-  width: 100%;
-  max-width: 1200px;
-  height: auto;
-  border-radius: 0.75rem;
-  overflow: hidden;
-  display: block;
-  margin: 0.5rem auto 1rem;
-}
-
+/* ここは中央寄せでOK */
 .content {
   max-width: 900px;
   margin: 0 auto;
@@ -45,4 +47,15 @@
   font-size: 1rem;
   line-height: 1.6;
   color: #01579b;
+}
+
+.infoBox {
+  background: #f1f8ff;
+  padding: 1rem;
+  border-radius: 12px;
+  margin-top: 1.5rem;
+  line-height: 1.7;
+}
+.infoBox strong {
+  color: #0277bd;
 }

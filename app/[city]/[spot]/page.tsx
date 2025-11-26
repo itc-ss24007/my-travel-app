@@ -1,16 +1,18 @@
 import { client } from "@/_lib/microcms";
 import Link from "next/link";
-import Image from "next/image";
 import { notFound } from "next/navigation";
+import ImageCarousel, { Img } from "@/app/components/ImageCarousel";
 import styles from "./page.module.css";
 
 type Spot = {
   id: string;
   title: string;
-  image?: { url: string };
   city: string;
   recommend?: string;
   description?: string;
+  photos?: { url: string }[];
+  business_hours?: string;
+  price?: string;
 };
 
 export async function generateStaticParams() {
@@ -25,16 +27,16 @@ export default async function SpotPage({
 }) {
   const { city, spot } = await params;
 
-  // contentId を使って単一取得
   const data = await client.get<Spot>({
     endpoint: "travel-spots",
     contentId: spot,
   });
 
   if (!data) return notFound();
-
-  // city が一致しない場合は notFound にしても良い
   if (data.city !== city) return notFound();
+
+  // 写真 → Img[] に変換
+  const images: Img[] = data.photos?.map((p) => ({ url: p.url })) ?? [];
 
   return (
     <main className={styles.main}>
@@ -44,24 +46,40 @@ export default async function SpotPage({
 
       <h1 className={styles.title}>{data.title}</h1>
 
-      {data.image?.url && (
-        <Image
-          src={data.image.url}
-          alt={data.title}
-          width={1200}
-          height={800}
-          className={styles.hero}
-          sizes="(max-width: 600px) 100vw, 50vw"
-          style={{ objectFit: "cover" }}
-        />
+      {/* カルーセル */}
+      {images.length > 0 && (
+        <div className={styles.carouselWrapper}>
+          <ImageCarousel images={images} />
+        </div>
       )}
 
       <section className={styles.content}>
-        <p className={styles.recommend}>{data.recommend}</p>
-        <div
-          className={styles.description}
-          dangerouslySetInnerHTML={{ __html: data.description ?? "" }}
-        />
+        {data.recommend && <p className={styles.recommend}>{data.recommend}</p>}
+
+        {data.description && (
+          <div
+            className={styles.description}
+            dangerouslySetInnerHTML={{ __html: data.description }}
+          />
+        )}
+
+        {/* 営業時間 & 料金 */}
+        {(data.business_hours || data.price) && (
+          <div className={styles.infoBox}>
+            {data.business_hours && (
+              <p>
+                <strong>営業時間：</strong>
+                {data.business_hours}
+              </p>
+            )}
+            {data.price && (
+              <p>
+                <strong>料金：</strong>
+                {data.price}
+              </p>
+            )}
+          </div>
+        )}
       </section>
     </main>
   );
