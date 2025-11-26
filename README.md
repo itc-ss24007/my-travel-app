@@ -40,6 +40,11 @@
     - [spot]/
       - page.tsx — スポット詳細ページ
       - page.module.css — スポット詳細のスタイル
+  - components
+    - ImageCarousel 　自動スライド
+    - Pagination 　　ページネーション
+    - SearchField 　検索機能
+  - search 検索結果
 - \_lib/
   - microcms.ts — microCMS クライアント初期化
 
@@ -57,6 +62,7 @@
   - location（所在地）
   - recommend（おすすめポイント）
   - city(ページの URL 用と関連)
+  - photos (自動スライドで表示画像リスト)
 
 ## microCMS にアクセスする処理
 
