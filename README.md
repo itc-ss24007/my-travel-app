@@ -63,6 +63,7 @@
   - recommend（おすすめポイント）
   - city(ページの URL 用と関連)
   - photos (自動スライドで表示画像リスト)
+  - official_url (公式サイト URL（任意）)
 
 ## microCMS にアクセスする処理
 

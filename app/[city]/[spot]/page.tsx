@@ -11,6 +11,7 @@ type Spot = {
   recommend?: string;
   description?: string;
   photos?: { url: string }[];
+  official_url?: string; // 公式サイトURL（任意）
   business_hours?: string;
   price?: string;
 };
@@ -40,9 +41,9 @@ export default async function SpotPage({
 
   return (
     <main className={styles.main}>
-      <Link href={`/${city}`} className={styles.backLink}>
+      {/* <Link href={`/${city}`} className={styles.backLink}>
         ← {city} に戻る
-      </Link>
+      </Link> */}
 
       <h1 className={styles.title}>{data.title}</h1>
 
@@ -78,6 +79,19 @@ export default async function SpotPage({
                 {data.price}
               </p>
             )}
+          </div>
+        )}
+        {/* 公式サイトが存在する場合に表示 */}
+        {data.official_url && (
+          <div className={styles.official}>
+            <a
+              href={data.official_url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.officialLink}
+            >
+              公式サイトを見る
+            </a>
           </div>
         )}
       </section>

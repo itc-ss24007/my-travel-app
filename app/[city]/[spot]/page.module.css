@@ -59,3 +59,26 @@
 .infoBox strong {
   color: #0277bd;
 }
+
+/* 公式サイトリンク全体を中央寄せ */
+.official {
+  text-align: left;
+  margin-top: 2.5rem;
+}
+
+/* 公式サイトボタン風 */
+.officialLink {
+  display: inline-block;
+  background: #0277bd;
+  color: #fff;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: background 0.3s;
+}
+
+/* ホバー時に色を少し明るくする */
+.officialLink:hover {
+  background: #039be5;
+}
