@@ -51,9 +51,9 @@ export default async function CityPage({
 
   return (
     <main className={styles.main}>
-      <Link href="/" className={styles.backLink}>
+      {/* <Link href="/" className={styles.backLink}>
         ← トップへ戻る
-      </Link>
+      </Link> */}
 
       <h1 className={styles.title}>{city} の観光地一覧</h1>
 
